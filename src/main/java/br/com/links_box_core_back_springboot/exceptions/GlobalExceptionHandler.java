@@ -2,6 +2,7 @@ package br.com.links_box_core_back_springboot.exceptions;
 
 import br.com.links_box_core_back_springboot.dtos.ErrorFieldDTO;
 import br.com.links_box_core_back_springboot.dtos.ResponseErrorDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,8 +44,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ResponseErrorDTO> authenticationExceptionHandler() {
-        ResponseErrorDTO responseErrorDTO = new ResponseErrorDTO("Ocorreu um erro interno, tente novamente.");
+        ResponseErrorDTO responseErrorDTO = new ResponseErrorDTO("E-mail e/ou senha inválidos.");
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseErrorDTO);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ResponseErrorDTO> userNotFoundException() {
+        ResponseErrorDTO responseErrorDTO = new ResponseErrorDTO("E-mail e/ou senha inválidos.");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseErrorDTO);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ResponseErrorDTO> entityNotFoundException() {
+        ResponseErrorDTO responseErrorDTO = new ResponseErrorDTO("Ocorreu um erro interno, tente novamente.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseErrorDTO);
     }
 
 }
