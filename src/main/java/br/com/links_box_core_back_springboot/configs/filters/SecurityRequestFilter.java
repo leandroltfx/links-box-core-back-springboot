@@ -37,17 +37,7 @@ public class SecurityRequestFilter extends OncePerRequestFilter {
             var token = this.jwtProvider.validateToken(header);
 
             if (token == null) {
-                ResponseErrorDTO responseErrorDTO = new ResponseErrorDTO("Token inválido");
-
-                // Converte para JSON
-                ObjectMapper mapper = new ObjectMapper();
-                String body = mapper.writeValueAsString(responseErrorDTO);
-
-                // Define resposta
-                response.setStatus(HttpStatus.FORBIDDEN.value());
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                response.getWriter().write(body);
-                response.getWriter().flush();
+                sendTokenErrorResponse("Token inválido.", response);
                 return;
             }
 
@@ -62,8 +52,30 @@ public class SecurityRequestFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
 
             request.setAttribute("user_id", token.getSubject());
+        } else {
+            if ((!request.getRequestURL().toString().contains("user")) && (!request.getRequestURL().toString().contains("login"))) {
+                sendTokenErrorResponse("Token não encontrado.", response);
+                return;
+            }
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void sendTokenErrorResponse(
+            String message,
+            HttpServletResponse response
+    ) throws IOException {
+        ResponseErrorDTO responseErrorDTO = new ResponseErrorDTO(message);
+
+        // Converte para JSON
+        ObjectMapper mapper = new ObjectMapper();
+        String body = mapper.writeValueAsString(responseErrorDTO);
+
+        // Define resposta
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.getWriter().write(body);
+        response.getWriter().flush();
     }
 }
