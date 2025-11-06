@@ -59,7 +59,7 @@ public class CollectionController {
                 .body(listCollectionsUseCase.execute(UUID.fromString(userId.toString()), page, size));
     }
 
-    @PatchMapping("/{collection_id}")
+    @PutMapping("/{collection_id}")
     public ResponseEntity<UpdateCollectionResponseDTO> updateCollection(
             @PathVariable("collection_id") UUID collectionId,
             @Valid @RequestBody UpdateCollectionRequestDTO updateCollectionRequestDTO,
