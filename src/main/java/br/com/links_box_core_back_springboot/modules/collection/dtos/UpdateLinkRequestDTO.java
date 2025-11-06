@@ -1,7 +1,6 @@
 package br.com.links_box_core_back_springboot.modules.collection.dtos;
 
 import br.com.links_box_core_back_springboot.modules.collection.enums.LinkCategoryEnum;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,5 @@
 package br.com.links_box_core_back_springboot.modules.collection.useCases;
 
-import br.com.links_box_core_back_springboot.modules.collection.dtos.CollectionDTO;
 import br.com.links_box_core_back_springboot.modules.collection.dtos.CreateCollectionRequestDTO;
 import br.com.links_box_core_back_springboot.modules.collection.dtos.CreateCollectionResponseDTO;
 import br.com.links_box_core_back_springboot.modules.collection.entities.CollectionEntity;
