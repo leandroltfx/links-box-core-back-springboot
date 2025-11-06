@@ -30,6 +30,9 @@ public class CollectionController {
     @Autowired
     private ListLinksUseCase listLinksUseCase;
 
+    @Autowired
+    private UpdateLinkUseCase updateLinkUseCase;
+
     @PostMapping
     public ResponseEntity<CreateCollectionResponseDTO> createCollection(
             @Valid @RequestBody CreateCollectionRequestDTO createCollectionRequestDTO,
@@ -99,6 +102,24 @@ public class CollectionController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(listLinksUseCase.execute(UUID.fromString(userId.toString()), collectionId, page, size));
+    }
+
+    @PutMapping("/{collection_id}/links/{link_id}")
+    public ResponseEntity<UpdateLinkResponseDTO> updateLink(
+            @PathVariable("collection_id") UUID collectionId,
+            @PathVariable("link_id") UUID linkId,
+            @Valid @RequestBody UpdateLinkRequestDTO updateLinkRequestDTO,
+            HttpServletRequest httpServletRequest
+    ) {
+        var userId = httpServletRequest.getAttribute("user_id");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                this.updateLinkUseCase.execute(
+                        UUID.fromString(userId.toString()),
+                        collectionId,
+                        linkId,
+                        updateLinkRequestDTO
+                )
+        );
     }
 
 }

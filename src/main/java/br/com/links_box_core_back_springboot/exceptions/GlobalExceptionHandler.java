@@ -5,6 +5,7 @@ import br.com.links_box_core_back_springboot.dtos.ResponseErrorDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -57,6 +58,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ResponseErrorDTO> entityNotFoundException() {
         ResponseErrorDTO responseErrorDTO = new ResponseErrorDTO("Ocorreu um erro interno, tente novamente.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseErrorDTO);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Object> handleEnumConversion(HttpMessageNotReadableException ex) {
+        ResponseErrorDTO responseErrorDTO = new ResponseErrorDTO("Campos inválidos.");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseErrorDTO);
     }
 
