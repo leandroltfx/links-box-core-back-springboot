@@ -1,10 +1,7 @@
 package br.com.links_box_core_back_springboot.modules.collection.controllers;
 
 import br.com.links_box_core_back_springboot.modules.collection.dtos.*;
-import br.com.links_box_core_back_springboot.modules.collection.useCases.CreateCollectionUseCase;
-import br.com.links_box_core_back_springboot.modules.collection.useCases.CreateLinkUseCase;
-import br.com.links_box_core_back_springboot.modules.collection.useCases.ListCollectionsUseCase;
-import br.com.links_box_core_back_springboot.modules.collection.useCases.UpdateCollectionUseCase;
+import br.com.links_box_core_back_springboot.modules.collection.useCases.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +26,9 @@ public class CollectionController {
 
     @Autowired
     private CreateLinkUseCase createLinkUseCase;
+
+    @Autowired
+    private ListLinksUseCase listLinksUseCase;
 
     @PostMapping
     public ResponseEntity<CreateCollectionResponseDTO> createCollection(
@@ -86,6 +86,19 @@ public class CollectionController {
                         createLinkRequestDTO
                 )
         );
+    }
+
+    @GetMapping("/{collection_id}/links")
+    public ResponseEntity<ListLinksResponseDTO> listLinks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable("collection_id") UUID collectionId,
+            HttpServletRequest httpServletRequest
+    ) {
+        var userId = httpServletRequest.getAttribute("user_id");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(listLinksUseCase.execute(UUID.fromString(userId.toString()), collectionId, page, size));
     }
 
 }
