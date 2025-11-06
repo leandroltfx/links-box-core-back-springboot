@@ -1,9 +1,7 @@
 package br.com.links_box_core_back_springboot.modules.collection.mappers;
 
-import br.com.links_box_core_back_springboot.modules.collection.dtos.CollectionDTO;
 import br.com.links_box_core_back_springboot.modules.collection.dtos.CreateLinkRequestDTO;
 import br.com.links_box_core_back_springboot.modules.collection.dtos.LinkDTO;
-import br.com.links_box_core_back_springboot.modules.collection.entities.CollectionEntity;
 import br.com.links_box_core_back_springboot.modules.collection.entities.LinkEntity;
 import org.springframework.stereotype.Service;
 

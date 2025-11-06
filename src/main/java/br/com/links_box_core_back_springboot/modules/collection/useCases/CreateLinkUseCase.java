@@ -1,11 +1,7 @@
 package br.com.links_box_core_back_springboot.modules.collection.useCases;
 
-import br.com.links_box_core_back_springboot.exceptions.UserNotFoundException;
-import br.com.links_box_core_back_springboot.modules.collection.dtos.CreateCollectionRequestDTO;
-import br.com.links_box_core_back_springboot.modules.collection.dtos.CreateCollectionResponseDTO;
 import br.com.links_box_core_back_springboot.modules.collection.dtos.CreateLinkRequestDTO;
 import br.com.links_box_core_back_springboot.modules.collection.dtos.CreateLinkResponseDTO;
-import br.com.links_box_core_back_springboot.modules.collection.entities.CollectionEntity;
 import br.com.links_box_core_back_springboot.modules.collection.entities.LinkEntity;
 import br.com.links_box_core_back_springboot.modules.collection.mappers.LinkMapper;
 import br.com.links_box_core_back_springboot.modules.collection.repositories.CollectionRepository;
