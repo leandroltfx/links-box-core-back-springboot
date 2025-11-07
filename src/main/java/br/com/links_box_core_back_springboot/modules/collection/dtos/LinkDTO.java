@@ -20,6 +20,7 @@ public class LinkDTO {
     private String description;
     private String url;
     private LinkCategoryEnum category;
+    private Boolean isHealthy;
     private LocalDateTime createdAt;
 
 }
