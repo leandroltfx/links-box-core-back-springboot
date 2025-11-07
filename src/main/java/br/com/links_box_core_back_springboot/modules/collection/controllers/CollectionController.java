@@ -25,6 +25,9 @@ public class CollectionController {
     private UpdateCollectionUseCase updateCollectionUseCase;
 
     @Autowired
+    private DeleteCollectionUseCase deleteCollectionUseCase;
+
+    @Autowired
     private CreateLinkUseCase createLinkUseCase;
 
     @Autowired
@@ -75,6 +78,18 @@ public class CollectionController {
                         updateCollectionRequestDTO,
                         UUID.fromString(userId.toString())
                 )
+        );
+    }
+
+    @DeleteMapping("/{collection_id}")
+    public void deleteCollection(
+            @PathVariable("collection_id") UUID collectionId,
+            HttpServletRequest httpServletRequest
+    ) {
+        var userId = httpServletRequest.getAttribute("user_id");
+        this.deleteCollectionUseCase.execute(
+                UUID.fromString(userId.toString()),
+                collectionId
         );
     }
 

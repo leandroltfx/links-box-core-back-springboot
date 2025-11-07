@@ -11,4 +11,6 @@ public interface LinkRepository extends JpaRepository<LinkEntity, UUID> {
 
     Page<LinkEntity> findAllByCollectionId(UUID collectionId, Pageable pageable);
 
+    void deleteAllByCollectionId(UUID collectionId);
+
 }
