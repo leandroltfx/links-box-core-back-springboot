@@ -33,6 +33,9 @@ public class CollectionController {
     @Autowired
     private UpdateLinkUseCase updateLinkUseCase;
 
+    @Autowired
+    private DeleteLinkUseCase deleteLinkUseCase;
+
     @PostMapping
     public ResponseEntity<CreateCollectionResponseDTO> createCollection(
             @Valid @RequestBody CreateCollectionRequestDTO createCollectionRequestDTO,
@@ -119,6 +122,20 @@ public class CollectionController {
                         linkId,
                         updateLinkRequestDTO
                 )
+        );
+    }
+
+    @DeleteMapping("/{collection_id}/links/{link_id}")
+    public void deleteLink(
+            @PathVariable("collection_id") UUID collectionId,
+            @PathVariable("link_id") UUID linkId,
+            HttpServletRequest httpServletRequest
+    ) {
+        var userId = httpServletRequest.getAttribute("user_id");
+        this.deleteLinkUseCase.execute(
+                UUID.fromString(userId.toString()),
+                collectionId,
+                linkId
         );
     }
 
