@@ -20,16 +20,13 @@ public class SecurityConfig {
         httpSecurity
                 // Desabilita CSRF (para APIs REST)
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        // Permite criação de conta
-                        .requestMatchers(HttpMethod.POST, "/user").permitAll()
-                        // Permite login
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        // Exige autenticação para deletar conta
-                        .requestMatchers(HttpMethod.GET, "/user").authenticated()
-                        // Qualquer outra rota precisa de autenticação
-                        .anyRequest().authenticated()
-                )
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/user").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/login").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/user").authenticated();
+                    auth.anyRequest().authenticated();
+                })
                 // Adiciona o filtro customizado
                 .addFilterBefore(securityRequestFilter, BasicAuthenticationFilter.class);
 
